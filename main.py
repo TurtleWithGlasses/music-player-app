@@ -1,5 +1,8 @@
+import tkinter.messagebox
 from tkinter import *
 from pygame import mixer
+from tkinter import filedialog
+from tkinter import messagebox
 
 window = Tk()
 
@@ -8,12 +11,35 @@ mixer.init()
 window.geometry("600x600")
 window.title("Python Music Player")
 
-text_label = Label(window, text="Play Button")
-text_label.pack()
+menubar = Menu(window)
+window.config(menu=menubar)
+
+
+def browse_file():
+    global file_name
+    file_name = filedialog.askopenfilename()
+
+def show_help():
+    tkinter.messagebox.showinfo("Help", "This is an app created by someone")
+
+
+submenu1 = Menu(menubar, tearoff=0)
+menubar.add_cascade(label="File", menu=submenu1)
+submenu1.add_command(label="Open", command=browse_file)
+submenu1.add_command(label="Exit", command=window.destroy)
+
+submenu2 = Menu(menubar, tearoff=0)
+menubar.add_cascade(label="About Us", menu=submenu2)
+submenu2.add_command(label="Help", command=show_help)
+
 
 def play_music():
-    mixer.music.load("cardinal-37075.mp3")
-    mixer.music.play()
+    try:
+        mixer.music.load(file_name)
+        mixer.music.play()
+    except:
+        tkinter.messagebox.showerror("File Not Found")
+
 
 def stop_music():
     mixer.music.stop()
@@ -21,6 +47,7 @@ def stop_music():
 def set_volume(value):
     volume = int(value) / 100
     mixer.music.set_volume(volume)
+
 
 
 play_photo = PhotoImage(file="play.png")
