@@ -35,10 +35,15 @@ submenu2.add_command(label="Help", command=show_help)
 
 def play_music():
     try:
-        mixer.music.load(file_name)
-        mixer.music.play()
+        paused
     except:
-        tkinter.messagebox.showerror("File Not Found")
+        try:
+            mixer.music.load(file_name)
+            mixer.music.play()
+        except:
+            tkinter.messagebox.showerror(title="File Error", message="File not found")
+    else:
+        mixer.music.unpause()
 
 
 def stop_music():
@@ -48,6 +53,10 @@ def set_volume(value):
     volume = int(value) / 100
     mixer.music.set_volume(volume)
 
+def pause_music():
+    global paused
+    paused = True
+    mixer.music.pause()
 
 
 play_photo = PhotoImage(file="play.png")
@@ -57,6 +66,11 @@ play_button.pack()
 stop_photo = PhotoImage(file="stop.png")
 stop_button = Button(window, image=stop_photo, command=stop_music)
 stop_button.pack()
+
+pause_photo = PhotoImage(file="pause.png")
+pause_button = Button(window, image=pause_photo, command=pause_music)
+pause_button.pack()
+
 
 scale = Scale(window, from_=0, to=100, orient=HORIZONTAL, command=set_volume)
 scale.set(50)
