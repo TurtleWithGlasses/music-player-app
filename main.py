@@ -40,14 +40,17 @@ def play_music():
         try:
             mixer.music.load(file_name)
             mixer.music.play()
+            status_bar["text"] = "Music is playing"
         except:
             tkinter.messagebox.showerror(title="File Error", message="File not found")
     else:
         mixer.music.unpause()
+        status_bar["text"] = "Music is playing"
 
 
 def stop_music():
     mixer.music.stop()
+    status_bar["text"] = "Music is stopped"
 
 def set_volume(value):
     volume = int(value) / 100
@@ -57,6 +60,7 @@ def pause_music():
     global paused
     paused = True
     mixer.music.pause()
+    status_bar["text"] = "Music is paused"
 
 def rewind_music():
     play_music()
@@ -89,5 +93,7 @@ scale = Scale(bottom_frame, from_=0, to=100, orient=HORIZONTAL, command=set_volu
 scale.set(50)
 scale.grid(row=0, column=1)
 
+status_bar = Label(window,text="Keep enjoying the music", relief=SUNKEN, anchor=W)
+status_bar.pack(side=BOTTOM, fill=X)
 
 window.mainloop()
