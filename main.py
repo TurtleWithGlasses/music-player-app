@@ -17,10 +17,18 @@ def play_music():
     print("Music is playing")
 
 
+def stop_music():
+    mixer.music.stop()
+    print("Music is stopped")
 
-photo = PhotoImage(file="play.png")
-play_button = Button(window, image=photo, command=play_music)
+
+play_photo = PhotoImage(file="play.png")
+play_button = Button(window, image=play_photo, command=play_music)
 play_button.pack()
+
+stop_photo = PhotoImage(file="stop.png")
+stop_button = Button(window, image=stop_photo, command=stop_music)
+stop_button.pack()
 
 
 window.mainloop()
