@@ -58,24 +58,36 @@ def pause_music():
     paused = True
     mixer.music.pause()
 
+def rewind_music():
+    play_music()
+
+
+frame = Frame(window)
+frame.pack(padx=10, pady=10)
+
 
 play_photo = PhotoImage(file="play.png")
-play_button = Button(window, image=play_photo, command=play_music)
-play_button.pack()
+play_button = Button(frame, image=play_photo, command=play_music)
+play_button.grid(row=0, column=0, padx=10)
 
 stop_photo = PhotoImage(file="stop.png")
-stop_button = Button(window, image=stop_photo, command=stop_music)
-stop_button.pack()
+stop_button = Button(frame, image=stop_photo, command=stop_music)
+stop_button.grid(row=0, column=1, padx=10)
 
 pause_photo = PhotoImage(file="pause.png")
-pause_button = Button(window, image=pause_photo, command=pause_music)
-pause_button.pack()
+pause_button = Button(frame, image=pause_photo, command=pause_music)
+pause_button.grid(row=0, column=2, padx=10)
 
+bottom_frame = Frame(window)
+bottom_frame.pack()
 
-scale = Scale(window, from_=0, to=100, orient=HORIZONTAL, command=set_volume)
+rewind_photo = PhotoImage("rewind-arrows.png")
+rewind_button = Button(bottom_frame, image=rewind_photo, command=rewind_music)
+rewind_button.grid(row=0, column=0)
+
+scale = Scale(bottom_frame, from_=0, to=100, orient=HORIZONTAL, command=set_volume)
 scale.set(50)
-scale.pack()
-
+scale.grid(row=0, column=1)
 
 
 window.mainloop()
